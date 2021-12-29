@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: nacos-gateway
+  cloud:
+    gateway:
+      enabled: true
+      routes:
+        - id: demo-server
+          uri: lb://nacos-provider
+          predicates:
+            - Path=/hello/**
+          filters:
+            - StripPrefix=1
+    nacos:
+      config:
+        file-extension: yml
+      discovery:
+        server-addr: 192.168.1.70:8848
+    sentinel:
+      filter:
+        enabled: false
+      transport:
+        dashboard: 192.168.1.70:8080
+        port: 8719
+      eager: true
